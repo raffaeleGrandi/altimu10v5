@@ -11,7 +11,7 @@ class I2C(object):
     """ Class to set up and access I2C devices.
     """
 
-    def __init__(self, bus_id=1):
+    def __init__(self, bus_id=2):
         """ Initialize the I2C bus. """
         self._i2c = SMBus(bus_id)
 
