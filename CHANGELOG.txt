@@ -1,3 +1,12 @@
+Version 0.2
+-----------
+
+	- Minor modifications to enable the temperature sensor
+	- Coded a simple method to get temperature data
+	- Modification of the default i2c bus from 1 to 2 (to better operate on BBW)
+	- Tested on Beaglebone White (BBW)
+
+
 Version 0.1
 -----------
 

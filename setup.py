@@ -7,7 +7,7 @@ Licensed under MIT.
 import sys
 from setuptools import setup
 
-version = "0.1"
+version = "0.2"
 
 setup(name="altimu10v5",
       version=version,
