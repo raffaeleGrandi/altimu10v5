@@ -5,7 +5,7 @@ This module for the Raspberry Pi computer helps interface the LIS3MDL
 magnetometer.The library makes it easy to read the raw magnetometer
 through I²C interface.
 
-The datasheet for the LSM6DS33 is available at
+The datasheet for the LIS3MDL is available at
 [https://www.pololu.com/file/download/LIS3MDL.pdf?file_id=0J1089]
 """
 

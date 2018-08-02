@@ -16,10 +16,10 @@ class IMU(object):
     def __init__(self):
         super(IMU, self).__init__()
         self.lsm6ds33 = LSM6DS33()
-        self.gyroAccelEnabled = False
-        self.lis3mdl = LIS3MDL()
-        self.barometerEnabled = False
+        self.gyroAccelEnabled = False        
         self.lps25h = LPS25H()
+        self.barometerEnabled = False        
+        self.lis3mdl = LIS3MDL()
         self.magnetometerEnabled = False
 
     def __del__(self):
@@ -27,7 +27,7 @@ class IMU(object):
         del(self.lis3mdl)
         del(self.lps25h)
 
-    def enable(self, gyroAccel=True, barometer=True, magnetometer=True):
+    def enable(self, gyroAccel=True, barometer=True, magnetometer=True, termometer=True):
         """ Enable the given devices. """
 
         if gyroAccel:
@@ -37,8 +37,17 @@ class IMU(object):
             self.lps25h.enable()
             self.barometerEnabled = True
         if magnetometer:
-            self.lis3mdl.enable()
+            self.lis3mdl.enable(termometer)
             self.magnetometerEnabled = True
+            
+    def get_gyroAccel_ref(self):
+        return self.lsm6ds33
+    
+    def get_barom_ref(self):
+        return self.lps25h
+    
+    def get_magnetoTerm_ref(self):
+        return self.lis3mdl
 
     def get_complementary_angles(self, delta_t=0.05):
         """ Calculate combined angles of accelerometer and gyroscope
