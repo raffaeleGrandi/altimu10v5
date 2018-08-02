@@ -24,7 +24,7 @@ class LPS25H(I2C):
         LPS25H_PRESS_OUT_H,   # high byte of pressure value
     ]
 
-    def __init__(self, bus_id=1):
+    def __init__(self, bus_id=2):
         """ Set up and access LPS25H digital barometer.
         """
 

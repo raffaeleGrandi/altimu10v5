@@ -40,7 +40,7 @@ class LSM6DS33(I2C):
         LSM6DS33_OUTZ_H_XL,  # high byte of Z value
     ]
 
-    def __init__(self, bus_id=1):
+    def __init__(self, bus_id=2):
         """ Set up I2C connection and initialize some flags and values.
         """
 
