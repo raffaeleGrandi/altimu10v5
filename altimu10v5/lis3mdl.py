@@ -27,7 +27,7 @@ class LIS3MDL(I2C):
         LIS3MDL_OUT_Z_H,  # high byte of Z value
     ]
 
-    def __init__(self, bus_id=1):
+    def __init__(self, bus_id=2):
         """ Set up I2C connection and initialize some flags and values.
         """
 
@@ -42,21 +42,28 @@ class LIS3MDL(I2C):
             super(LIS3MDL, self).__del__()
         except:
             pass
-
-    def enable(self):
+	
+    def enable(self, temp_sens_active=False):
         """ Enable and set up the the magnetometer and determine
             whether to auto increment registers during I2C read operations.
         """
 
         # Disable magnetometer and temperature sensor first
         self.write_register(LIS3MDL_ADDR, LIS3MDL_CTRL_REG1, 0x00)
-        self.write_register(LIS3MDL_ADDR, LIS3MDL_CTRL_REG3, 0x03)
+        self.write_register(LIS3MDL_ADDR, LIS3MDL_CTRL_REG3, 0x03) # Power-down mode
 
         # Enable device in continuous conversion mode
         self.write_register(LIS3MDL_ADDR, LIS3MDL_CTRL_REG3, 0x00)
 
-        # Initial value for CTRL_REG1
+        # Initial value for CTRL_REG1 (wo temperature sensor)
         ctrl_reg1 = 0x00
+        
+        self.is_temperature_sensor_enable = False
+        if temp_sens_active:
+            # Initial value for CTRL_REG1 (w temperature sensor)
+			 # binary value -> 10000000b, hex value -> 0x80
+             ctrl_reg1 = 0x80
+             self.is_temperature_sensor_enable = True
 
         # Ultra-high-performance mode for X and Y
         # Output data rate 10Hz
@@ -83,3 +90,15 @@ class LIS3MDL(I2C):
             raise(Exception('Magnetometer is not enabled'))
 
         return self.read_3d_sensor(LIS3MDL_ADDR, self.magnetometer_registers)
+        
+    def get_termometer_raw(self):
+        """ Return temerature raw value (-40 / + 80)
+        """
+        # Check if termometer has been enabled
+        if not self.is_temperature_sensor_enable:
+            raise(Exception('Termometer is not enabled'))
+		
+        temp_lo_byte = self.read_register(LIS3MDL_ADDR, LIS3MDL_TEMP_OUT_L)
+        temp_hi_byte = self.read_register(LIS3MDL_ADDR, LIS3MDL_TEMP_OUT_H)
+        return self.combine_signed_lo_hi(temp_lo_byte, temp_hi_byte)		
+    
