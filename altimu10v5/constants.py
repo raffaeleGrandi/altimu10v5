@@ -41,6 +41,10 @@ LIS3MDL_OUT_Y_H = 0x2B   # Y output, high byte
 LIS3MDL_OUT_Z_L = 0x2C   # Z output, low byte
 LIS3MDL_OUT_Z_H = 0x2D   # Z output, high byte
 
+# Output register for termometer
+LIS3MDL_TEMP_OUT_L = 0x2E	# Temperature output, low byte
+LIS3MDL_TEMP_OUT_H = 0x2F	# Temperature output, high byte
+
 # Control registers for the digital barometer
 LPS25H_CTRL_REG1 = 0x20  # Set device power mode / ODR / BDU
 
@@ -54,3 +58,4 @@ GYRO_GAIN = 35.0
 
 # Accelerometer conversion factor for +/- 4g full scale
 ACCEL_CONVERSION_FACTOR = 0.122
+
